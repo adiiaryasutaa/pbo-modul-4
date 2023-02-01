@@ -3,6 +3,7 @@ package pbo.module4;
 import pbo.module4.database.DatabaseConnection;
 import pbo.module4.database.DatabaseQuery;
 import pbo.module4.forms.MainForm;
+import pbo.module4.forms.SplashForm;
 
 import java.io.File;
 import java.io.IOException;
@@ -14,6 +15,8 @@ import java.util.Objects;
 public class Application {
 	private static DatabaseConnection databaseConnection;
 	private static DatabaseQuery databaseQuery;
+
+	private static SplashForm splashForm;
 
 	public static void main(String[] args) throws URISyntaxException, IOException {
 		Application.makeDatabaseConnection();
@@ -27,8 +30,21 @@ public class Application {
 	}
 
 	private static void start() throws URISyntaxException, IOException {
-//		(new Splash()).setVisible(true);
-		(new MainForm()).setVisible(true);
+		Application.splashForm = new SplashForm();
+
+		Application.splashForm.setVisible(true);
+		try {
+			for (int i = 0; i <= 100; i++) {
+				Thread.sleep(10);
+
+				if (i == 100) {
+					Application.splashForm.setVisible(false);
+					(new MainForm()).setVisible(true);
+				}
+			}
+		} catch (InterruptedException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	public static File getResource(String path) throws URISyntaxException, IOException {

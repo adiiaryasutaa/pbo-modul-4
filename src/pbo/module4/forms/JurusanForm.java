@@ -1,11 +1,9 @@
 package pbo.module4.forms;
 
+import pbo.module4.database.query.model.JurusanQueryModel;
 import pbo.module4.forms.table.model.JurusanTableModel;
-import pbo.module4.model.Jurusan;
 
 import javax.swing.*;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
 
 public class JurusanForm extends JPanel {
 	private JPanel panel;
@@ -34,8 +32,6 @@ public class JurusanForm extends JPanel {
 		this.hapusButton.addActionListener(e -> this.deleteJurusan());
 
 		this.batalButton.addActionListener(e -> {
-			System.out.println(this.table.getSelectionModel().isSelectionEmpty());
-
 			this.table.getSelectionModel().clearSelection();
 
 			this.clearInputs();
@@ -63,19 +59,16 @@ public class JurusanForm extends JPanel {
 		String namaJurusan = this.namaJurusanTextField.getText().trim();
 
 		if (kodeJurusan.isEmpty() || kodeJurusan.isBlank() || namaJurusan.isEmpty() || namaJurusan.isBlank()) {
+			JOptionPane.showMessageDialog(this, "Input tidak boleh kosong", "Gagal Menambah Jurusan", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
 
-		HashMap<String, Object> data = new HashMap<>();
-		data.put(Jurusan.KODE_JURUSAN_COLUMN, kodeJurusan);
-		data.put(Jurusan.NAMA_JURUSAN_COLUMN, namaJurusan);
-
-		if (Jurusan.add(data)) {
+		if (JurusanQueryModel.insertJurusan(new pbo.module4.record.Jurusan(kodeJurusan, namaJurusan))) {
 			this.clearInputs();
 			this.tableModel.refresh();
 			JOptionPane.showMessageDialog(this, "Berhasil menambahkan jurusan");
 		} else {
-			JOptionPane.showMessageDialog(this, "Gagal menambahkan jurusan");
+			JOptionPane.showMessageDialog(this, "Gagal menambahkan jurusan", "", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
@@ -85,34 +78,27 @@ public class JurusanForm extends JPanel {
 
 		int selectedRow = this.table.getSelectedRow();
 
-		LinkedHashMap<String, Object> data = new LinkedHashMap<>();
-		data.put(Jurusan.KODE_JURUSAN_COLUMN, kodeJurusan);
-		data.put(Jurusan.NAMA_JURUSAN_COLUMN, namaJurusan);
-
-		LinkedHashMap<String, Object> wheres = new LinkedHashMap<>();
-		wheres.put(Jurusan.KODE_JURUSAN_COLUMN, this.table.getValueAt(selectedRow, 0));
-
-		if (Jurusan.update(data, wheres)) {
+		if (JurusanQueryModel.updateJurusan(
+			(String) this.table.getValueAt(selectedRow, 0),
+			new pbo.module4.record.Jurusan(kodeJurusan, namaJurusan)
+		)) {
 			this.clearInputs();
 			this.tableModel.refresh();
 			JOptionPane.showMessageDialog(this, "Berhasil mengedit jurusan");
 		} else {
-			JOptionPane.showMessageDialog(this, "Gagal mengedit jurusan");
+			JOptionPane.showMessageDialog(this, "Gagal mengedit jurusan", "", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
 	protected void deleteJurusan() {
 		int selectedRowIndex = this.table.getSelectedRow();
 
-		HashMap<String, Object> data = new HashMap<>();
-		data.put(Jurusan.KODE_JURUSAN_COLUMN, this.table.getValueAt(selectedRowIndex, 0));
-
-		if (Jurusan.delete(data)) {
+		if (JurusanQueryModel.deleteJurusan(this.tableModel.getData().get(selectedRowIndex))) {
 			this.clearInputs();
 			this.tableModel.refresh();
 			JOptionPane.showMessageDialog(this, "Berhasil menghapus jurusan");
 		} else {
-			JOptionPane.showMessageDialog(this, "Gagal menghapus jurusan");
+			JOptionPane.showMessageDialog(this, "Gagal menghapus jurusan", "", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 

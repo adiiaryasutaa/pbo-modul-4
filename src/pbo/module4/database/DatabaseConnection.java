@@ -17,19 +17,16 @@ public class DatabaseConnection {
 		this.password = password;
 	}
 
-	public Connection connect() {
+	public void connect() {
 		try {
-
 			Class.forName("com.mysql.cj.jdbc.Driver");
 
 			String url = String.format("jdbc:mysql://%s/%s", this.host, this.database);
 			this.connection = DriverManager.getConnection(url, this.user, this.password);
-
 		} catch (ClassNotFoundException | SQLException e) {
 			throw new RuntimeException(e);
 		}
 
-		return this.connection;
 	}
 
 	public Connection getConnection() {

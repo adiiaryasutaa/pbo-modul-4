@@ -1,20 +1,20 @@
 package pbo.module4.forms.table.model;
 
-import pbo.module4.database.query.model.JurusanQueryModel;
-import pbo.module4.record.Jurusan;
+import pbo.module4.database.query.model.KelasQueryModel;
+import pbo.module4.record.Kelas;
 
 import javax.swing.table.AbstractTableModel;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Vector;
 
-public class JurusanTableModel extends AbstractTableModel {
-	private LinkedList<Jurusan> data;
+public class KelasTableModel extends AbstractTableModel {
+	private LinkedList<Kelas> data;
 	private Vector<String> columnNameVector;
 	private Vector<Vector<Object>> dataVector;
 
-	public JurusanTableModel() {
-		this.columnNameVector = new Vector<>(List.of("Kode Jurusan", "Nama Jurusan"));
+	public KelasTableModel() {
+		this.columnNameVector = new Vector<>(List.of("Kode Kelas", "Nama Kelas"));
 		this.dataVector = new Vector<>();
 		this.refresh();
 	}
@@ -24,13 +24,13 @@ public class JurusanTableModel extends AbstractTableModel {
 	}
 
 	private void fetchData() {
-		this.data = JurusanQueryModel.getAllJurusan();
+		this.data = KelasQueryModel.getAllKelas();
 
 		this.dataVector.removeAllElements();
 
-		this.data.forEach(jurusan ->
-			JurusanTableModel.this.dataVector.add(
-				new Vector<>(List.of(jurusan.kode(), jurusan.nama())))
+		this.data.forEach(kelas ->
+			KelasTableModel.this.dataVector.add(
+				new Vector<>(List.of(kelas.kode(), kelas.nama())))
 		);
 
 		this.fireTableDataChanged();
@@ -56,7 +56,7 @@ public class JurusanTableModel extends AbstractTableModel {
 		return this.columnNameVector.elementAt(index);
 	}
 
-	public LinkedList<Jurusan> getData() {
+	public LinkedList<Kelas> getData() {
 		return this.data;
 	}
 }
