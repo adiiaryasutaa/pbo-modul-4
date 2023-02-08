@@ -30,21 +30,7 @@ public class Application {
 	}
 
 	private static void start() throws URISyntaxException, IOException {
-		Application.splashForm = new SplashForm();
-
-		Application.splashForm.setVisible(true);
-		try {
-			for (int i = 0; i <= 100; i++) {
-				Thread.sleep(10);
-
-				if (i == 100) {
-					Application.splashForm.setVisible(false);
-					(new MainForm()).setVisible(true);
-				}
-			}
-		} catch (InterruptedException e) {
-			throw new RuntimeException(e);
-		}
+		(new MainForm()).run();
 	}
 
 	public static File getResource(String path) throws URISyntaxException, IOException {

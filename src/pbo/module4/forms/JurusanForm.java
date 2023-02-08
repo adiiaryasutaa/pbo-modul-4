@@ -1,6 +1,7 @@
 package pbo.module4.forms;
 
 import pbo.module4.database.query.model.JurusanQueryModel;
+import pbo.module4.forms.listener.textfield.TextFieldDocumentListener;
 import pbo.module4.forms.table.model.JurusanTableModel;
 
 import javax.swing.*;
@@ -20,6 +21,9 @@ public class JurusanForm extends JPanel {
 		this.add(this.panel).setSize(800, 400);
 		this.tableModel = new JurusanTableModel();
 		this.table.setModel(tableModel);
+
+		this.namaJurusanTextField
+			.getDocument().addDocumentListener(new TextFieldDocumentListener(this.editButton));
 
 		this.editButton.setEnabled(false);
 		this.hapusButton.setEnabled(false);

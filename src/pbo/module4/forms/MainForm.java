@@ -1,76 +1,95 @@
 package pbo.module4.forms;
 
-import pbo.module4.Application;
-import pbo.module4.forms.listener.menubar.DataJurusanMenuMouseListener;
-import pbo.module4.forms.listener.menubar.DataKelasMenuMouseListener;
-import pbo.module4.forms.listener.menubar.DataMapelMenuMouseListener;
-import pbo.module4.forms.listener.menubar.DataSiswaMenuMouseListener;
-import pbo.module4.record.Siswa;
+import pbo.module4.forms.component.MenuBar;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.IOException;
-import java.net.URISyntaxException;
 
 public class MainForm extends JFrame {
 	private JPanel panel;
-	private JMenuBar menuBar;
 
+	private static JMenuBar menuBar = new MenuBar();
+	private static final SplashScreen splashScreen = new SplashScreen();
+	private static final LoginForm loginForm = new LoginForm();
+	private static final HomeScreen homeScreen = new HomeScreen();
 	private static final JurusanForm jurusanForm = new JurusanForm();
 	private static final KelasForm kelasForm = new KelasForm();
 	private static final MapelForm mapelForm = new MapelForm();
 	private static final SiswaForm siswaForm = new SiswaForm();
 
-	public MainForm() throws URISyntaxException, IOException {
-		this.setContentPane(this.panel);
-		this.placeOnCenterScreen();
-		this.prepareMenuBar();
-		this.prepareForms();
+	public MainForm() {
+		this.init();
 	}
 
-	private void placeOnCenterScreen() {
+	private void init() {
+		this.setContentPane(this.panel);
+
 		Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
 		int x = (int) ((dimension.getWidth() - this.getWidth()) / 2);
 		int y = (int) ((dimension.getHeight() - this.getHeight()) / 2);
 
-		this.setBounds(x, y, 1000, 720);
+		this.setBounds(x, y, 1400, 780);
 		this.setLocationRelativeTo(null);
-	}
 
-	private void prepareMenuBar() throws URISyntaxException, IOException {
-		this.menuBar = new JMenuBar();
-		this.menuBar.setBackground(new Color(249, 250, 251));
+		this.setJMenuBar(MainForm.menuBar);
 
-		JMenu dataJurusanMenu = new JMenu("Data Jurusan");
-		dataJurusanMenu.setIcon(new ImageIcon(Application.getResourceURL("folder.png")));
-		dataJurusanMenu.addMouseListener(new DataJurusanMenuMouseListener());
-		this.menuBar.add(dataJurusanMenu);
-
-		JMenu dataKelasMenu = new JMenu("Data Kelas");
-		dataKelasMenu.setIcon(new ImageIcon(Application.getResourceURL("home.png")));
-		dataKelasMenu.addMouseListener(new DataKelasMenuMouseListener());
-		this.menuBar.add(dataKelasMenu);
-
-		JMenu dataMapelMenu = new JMenu("Data Mapel");
-		dataMapelMenu.setIcon(new ImageIcon(Application.getResourceURL("book.png")));
-		dataMapelMenu.addMouseListener(new DataMapelMenuMouseListener());
-		this.menuBar.add(dataMapelMenu);
-
-		JMenu dataSiswaMenu = new JMenu("Data Siswa");
-		dataSiswaMenu.setIcon(new ImageIcon(Application.getResourceURL("file-text.png")));
-		dataSiswaMenu.addMouseListener(new DataSiswaMenuMouseListener());
-		this.menuBar.add(dataSiswaMenu);
-
-		menuBar.add(new JMenu("Data Diri")).setIcon(new ImageIcon(Application.getResourceURL("user.png")));
-
-		this.setJMenuBar(menuBar);
-	}
-
-	private void prepareForms() {
+		this.panel.add(MainForm.splashScreen).setVisible(false);
+		this.panel.add(MainForm.loginForm).setVisible(false);
+		this.panel.add(MainForm.homeScreen).setVisible(false);
 		this.panel.add(MainForm.jurusanForm).setVisible(true);
 		this.panel.add(MainForm.kelasForm).setVisible(false);
 		this.panel.add(MainForm.mapelForm).setVisible(false);
 		this.panel.add(MainForm.siswaForm).setVisible(false);
+	}
+
+	public static void beforeAuthenticatedScene() {
+		MainForm.menuBar.setVisible(false);
+		MainForm.loginForm.setVisible(true);
+		MainForm.homeScreen.setVisible(false);
+		MainForm.jurusanForm.setVisible(false);
+		MainForm.kelasForm.setVisible(false);
+		MainForm.mapelForm.setVisible(false);
+		MainForm.siswaForm.setVisible(false);
+	}
+
+	public static void authenticatedScene() {
+		MainForm.menuBar.setVisible(true);
+		MainForm.loginForm.setVisible(false);
+		MainForm.homeScreen.setVisible(true);
+		MainForm.jurusanForm.setVisible(false);
+		MainForm.kelasForm.setVisible(false);
+		MainForm.mapelForm.setVisible(false);
+		MainForm.siswaForm.setVisible(false);
+	}
+
+	public void run() {
+		this.setVisible(true);
+		MainForm.splashScreen.setVisible(true);
+
+		try {
+			for (int i = 0; i <= 100; i++) {
+				Thread.sleep(10);
+
+				if (i == 100) {
+					MainForm.splashScreen.setVisible(false);
+					MainForm.beforeAuthenticatedScene();
+				}
+			}
+		} catch (InterruptedException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	public static SplashScreen getSplashScreen() {
+		return MainForm.splashScreen;
+	}
+
+	public static LoginForm getLoginForm() {
+		return MainForm.loginForm;
+	}
+
+	public static HomeScreen getHomeScreen() {
+		return MainForm.homeScreen;
 	}
 
 	public static JurusanForm getJurusanForm() {
