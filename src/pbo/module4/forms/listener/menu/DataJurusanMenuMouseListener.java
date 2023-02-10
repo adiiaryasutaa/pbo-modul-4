@@ -12,10 +12,6 @@ public class DataJurusanMenuMouseListener extends MenuMouseListener {
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		MainForm.getHomeScreen().setVisible(false);
-		MainForm.getJurusanForm().setVisible(true);
-		MainForm.getKelasForm().setVisible(false);
-		MainForm.getMapelForm().setVisible(false);
-		MainForm.getSiswaForm().setVisible(false);
+		MainForm.getScreenRepository().show("jurusan");
 	}
 }

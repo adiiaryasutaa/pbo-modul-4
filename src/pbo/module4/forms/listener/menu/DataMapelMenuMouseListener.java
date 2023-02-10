@@ -12,10 +12,6 @@ public class DataMapelMenuMouseListener extends MenuMouseListener {
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		MainForm.getHomeScreen().setVisible(false);
-		MainForm.getJurusanForm().setVisible(false);
-		MainForm.getKelasForm().setVisible(false);
-		MainForm.getMapelForm().setVisible(true);
-		MainForm.getSiswaForm().setVisible(false);
+		MainForm.getScreenRepository().show("mapel");
 	}
 }

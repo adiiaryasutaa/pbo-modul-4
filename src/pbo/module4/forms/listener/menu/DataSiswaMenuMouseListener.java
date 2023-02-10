@@ -12,10 +12,6 @@ public class DataSiswaMenuMouseListener extends MenuMouseListener {
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		MainForm.getHomeScreen().setVisible(false);
-		MainForm.getJurusanForm().setVisible(false);
-		MainForm.getKelasForm().setVisible(false);
-		MainForm.getMapelForm().setVisible(false);
-		MainForm.getSiswaForm().setVisible(true);
+		MainForm.getScreenRepository().show("siswa");
 	}
 }

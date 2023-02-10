@@ -3,7 +3,6 @@ package pbo.module4;
 import pbo.module4.database.DatabaseConnection;
 import pbo.module4.database.DatabaseQuery;
 import pbo.module4.forms.MainForm;
-import pbo.module4.forms.SplashForm;
 
 import java.io.File;
 import java.io.IOException;
@@ -16,9 +15,7 @@ public class Application {
 	private static DatabaseConnection databaseConnection;
 	private static DatabaseQuery databaseQuery;
 
-	private static SplashForm splashForm;
-
-	public static void main(String[] args) throws URISyntaxException, IOException {
+	public static void main(String[] args) {
 		Application.makeDatabaseConnection();
 		Application.start();
 	}
@@ -29,7 +26,7 @@ public class Application {
 		Application.databaseQuery = new DatabaseQuery(Application.databaseConnection);
 	}
 
-	private static void start() throws URISyntaxException, IOException {
+	private static void start() {
 		(new MainForm()).run();
 	}
 

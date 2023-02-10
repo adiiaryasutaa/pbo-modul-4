@@ -12,10 +12,6 @@ public class DataKelasMenuMouseListener extends MenuMouseListener {
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		MainForm.getHomeScreen().setVisible(false);
-		MainForm.getJurusanForm().setVisible(false);
-		MainForm.getKelasForm().setVisible(true);
-		MainForm.getMapelForm().setVisible(false);
-		MainForm.getSiswaForm().setVisible(false);
+		MainForm.getScreenRepository().show("kelas");
 	}
 }

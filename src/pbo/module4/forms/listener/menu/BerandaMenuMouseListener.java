@@ -12,10 +12,6 @@ public class BerandaMenuMouseListener extends MenuMouseListener {
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		MainForm.getHomeScreen().setVisible(true);
-		MainForm.getJurusanForm().setVisible(false);
-		MainForm.getKelasForm().setVisible(false);
-		MainForm.getMapelForm().setVisible(false);
-		MainForm.getSiswaForm().setVisible(false);
+		MainForm.getScreenRepository().show("home");
 	}
 }
