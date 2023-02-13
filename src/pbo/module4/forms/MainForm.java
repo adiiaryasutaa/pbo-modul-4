@@ -7,7 +7,7 @@ import java.awt.*;
 
 public class MainForm extends JFrame {
 	private static ScreenRepository screenRepository;
-	private static JMenuBar menuBar;
+	private static MenuBar menuBar;
 
 	static {
 		MainForm.screenRepository = new ScreenRepository();
@@ -21,15 +21,6 @@ public class MainForm extends JFrame {
 		MainForm.screenRepository.put("mapel", new MapelForm());
 		MainForm.screenRepository.put("siswa", new SiswaForm());
 	}
-
-//	private static final SplashScreen splashScreen = new SplashScreen();
-//	private static final LoginForm loginForm = new LoginForm();
-//	private static final TestScreen testScreen = new TestScreen();
-//	private static final HomeScreen homeScreen = new HomeScreen();
-//	private static final JurusanForm jurusanForm = new JurusanForm();
-//	private static final KelasForm kelasForm = new KelasForm();
-//	private static final MapelForm mapelForm = new MapelForm();
-//	private static final SiswaForm siswaForm = new SiswaForm();
 
 	public MainForm() {
 		this.init();
@@ -47,40 +38,19 @@ public class MainForm extends JFrame {
 
 		this.setJMenuBar(MainForm.menuBar);
 
-//		this.panel.add(MainForm.splashScreen).setVisible(false);
-//		this.panel.add(MainForm.loginForm).setVisible(false);
-//		this.panel.add(MainForm.homeScreen).setVisible(false);
-//		this.panel.add(MainForm.testScreen).setVisible(false);
-//		this.panel.add(MainForm.jurusanForm).setVisible(false);
-//		this.panel.add(MainForm.kelasForm).setVisible(false);
-//		this.panel.add(MainForm.mapelForm).setVisible(false);
-//		this.panel.add(MainForm.siswaForm).setVisible(false);
+		for (JComponent screen : MainForm.screenRepository.values()) {
+			this.add(screen).setVisible(false);
+		}
 	}
 
 	public static void beforeAuthenticatedScene() {
+		MainForm.menuBar.setVisible(false);
 		MainForm.screenRepository.show("login");
-
-//		MainForm.menuBar.setVisible(false);
-//		MainForm.loginForm.setVisible(true);
-//		MainForm.homeScreen.setVisible(false);
-//		MainForm.testScreen.setVisible(false);
-//		MainForm.jurusanForm.setVisible(false);
-//		MainForm.kelasForm.setVisible(false);
-//		MainForm.mapelForm.setVisible(false);
-//		MainForm.siswaForm.setVisible(false);
 	}
 
 	public static void authenticatedScene() {
+		MainForm.menuBar.setVisible(true);
 		MainForm.screenRepository.show("home");
-
-//		MainForm.menuBar.setVisible(true);
-//		MainForm.loginForm.setVisible(false);
-//		MainForm.homeScreen.setVisible(true);
-//		MainForm.testScreen.setVisible(false);
-//		MainForm.jurusanForm.setVisible(false);
-//		MainForm.kelasForm.setVisible(false);
-//		MainForm.mapelForm.setVisible(false);
-//		MainForm.siswaForm.setVisible(false);
 	}
 
 	public void run() {
@@ -104,34 +74,6 @@ public class MainForm extends JFrame {
 	public static ScreenRepository getScreenRepository() {
 		return MainForm.screenRepository;
 	}
-
-//	public static SplashScreen getSplashScreen() {
-//		return MainForm.splashScreen;
-//	}
-//
-//	public static LoginForm getLoginForm() {
-//		return MainForm.loginForm;
-//	}
-//
-//	public static HomeScreen getHomeScreen() {
-//		return MainForm.homeScreen;
-//	}
-//
-//	public static JurusanForm getJurusanForm() {
-//		return MainForm.jurusanForm;
-//	}
-//
-//	public static KelasForm getKelasForm() {
-//		return MainForm.kelasForm;
-//	}
-//
-//	public static MapelForm getMapelForm() {
-//		return MainForm.mapelForm;
-//	}
-//
-//	public static SiswaForm getSiswaForm() {
-//		return MainForm.siswaForm;
-//	}
 
 	private JPanel panel;
 }

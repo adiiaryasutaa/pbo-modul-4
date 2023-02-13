@@ -28,11 +28,6 @@ public class MenuBar extends JMenuBar {
 
 			this.add(Box.createHorizontalStrut(40));
 
-			JMenu testMenu = new JMenu("Test");
-			testMenu.setIcon(new ImageIcon(Application.getResourceURL("folder.png")));
-			testMenu.addMouseListener(new DataJurusanMenuMouseListener(this));
-			this.menus.add(testMenu);
-
 			JMenu dataJurusanMenu = new JMenu("Data Jurusan");
 			dataJurusanMenu.setIcon(new ImageIcon(Application.getResourceURL("folder.png")));
 			dataJurusanMenu.addMouseListener(new DataJurusanMenuMouseListener(this));
@@ -70,10 +65,10 @@ public class MenuBar extends JMenuBar {
 			logoutMenu.addMouseListener(new LogOutMenuMouseListener(this));
 			this.add(logoutMenu);
 
+			this.setVisible(false);
+
 		} catch (URISyntaxException | IOException e) {
 			throw new RuntimeException(e);
 		}
-
-		this.setVisible(false);
 	}
 }

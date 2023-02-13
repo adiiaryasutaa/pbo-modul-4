@@ -14,7 +14,7 @@ public class JurusanTableModel extends AbstractTableModel {
 	private Vector<Vector<Object>> dataVector;
 
 	public JurusanTableModel() {
-		this.columnNameVector = new Vector<>(List.of("Kode Jurusan", "Nama Jurusan"));
+		this.columnNameVector = new Vector<>(List.of("Kode", "Nama"));
 		this.dataVector = new Vector<>();
 		this.refresh();
 	}

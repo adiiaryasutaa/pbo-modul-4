@@ -28,6 +28,7 @@ public class Application {
 
 	private static void start() {
 		(new MainForm()).run();
+//		(new MainFrame()).setVisible(true);
 	}
 
 	public static File getResource(String path) throws URISyntaxException, IOException {

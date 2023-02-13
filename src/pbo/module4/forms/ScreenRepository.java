@@ -4,7 +4,15 @@ import javax.swing.*;
 import java.util.LinkedHashMap;
 
 public class ScreenRepository extends LinkedHashMap<String, JComponent> {
-	public ScreenRepository() {}
+	private JFrame context;
+
+	public ScreenRepository(JFrame context) {
+		this.context = context;
+	}
+
+	public ScreenRepository() {
+
+	}
 
 	public void show(String name) {
 		this.hideAll();
@@ -19,6 +27,8 @@ public class ScreenRepository extends LinkedHashMap<String, JComponent> {
 
 	@Override
 	public JComponent put(String key, JComponent value) {
-		return super.put(key, value);
+		var screen = super.put(key, value);
+//		this.context.add(screen);
+		return screen;
 	}
 }
