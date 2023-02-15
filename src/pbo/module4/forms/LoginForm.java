@@ -29,7 +29,7 @@ public class LoginForm extends JPanel {
 		this.passwordPasswordField.addFocusListener(new TextFieldFocusListener(this.passwordPasswordField));
 
 		this.submitButton.setBorder(this.usernameTextField.getBorder());
-		this.submitButton.addMouseListener(new LoginSubmitButtonMouseListener(this, this.submitButton));
+		this.submitButton.addMouseListener(new LoginSubmitButtonMouseListener(this, this.submitButton, this.usernameTextField, this.passwordPasswordField));
 	}
 
 	private void prepareLoginImageIcon() {

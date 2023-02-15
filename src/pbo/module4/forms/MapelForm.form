@@ -50,7 +50,7 @@
                     <properties>
                       <font size="16"/>
                       <labelFor value="f2f8f"/>
-                      <text value="ID"/>
+                      <text value="Kode"/>
                     </properties>
                   </component>
                   <component id="f22b6" class="javax.swing.JLabel">
@@ -65,7 +65,7 @@
                   </component>
                 </children>
               </grid>
-              <component id="7839e" class="javax.swing.JTextField" binding="idTextField">
+              <component id="7839e" class="javax.swing.JTextField" binding="kodeTextField">
                 <constraints>
                   <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                     <preferred-size width="150" height="-1"/>

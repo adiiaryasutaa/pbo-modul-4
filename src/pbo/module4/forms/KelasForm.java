@@ -1,7 +1,9 @@
 package pbo.module4.forms;
 
-import pbo.module4.database.query.model.KelasQueryModel;
+import pbo.module4.database.query.record.JurusanQueryRecord;
+import pbo.module4.database.query.record.KelasQueryRecord;
 import pbo.module4.forms.table.model.KelasTableModel;
+import pbo.module4.record.Jurusan;
 
 import javax.swing.*;
 
@@ -14,12 +16,22 @@ public class KelasForm extends JPanel {
 	private JButton hapusButton;
 	private JButton batalButton;
 	private JTable table;
+	private JComboBox<Jurusan> jurusanComboBox;
 	private KelasTableModel tableModel;
 
 	public KelasForm() {
 		this.add(this.panel);
+		this.init();
+	}
+
+	private void init() {
+
 		this.tableModel = new KelasTableModel();
 		this.table.setModel(this.tableModel);
+
+		for (Jurusan jurusan : JurusanQueryRecord.all()) {
+			this.jurusanComboBox.addItem(jurusan);
+		}
 
 		this.editButton.setEnabled(false);
 		this.hapusButton.setEnabled(false);
@@ -45,6 +57,7 @@ public class KelasForm extends JPanel {
 			if (!selectionEmpty) {
 				this.kodeTextField.setText(this.table.getValueAt(selectedRowIndex, 0).toString());
 				this.namaTextField.setText(this.table.getValueAt(selectedRowIndex, 1).toString());
+				this.jurusanComboBox.setSelectedItem(this.tableModel.getData().get(selectedRowIndex).jurusan());
 			}
 
 			this.tambahButton.setEnabled(selectionEmpty);
@@ -57,13 +70,14 @@ public class KelasForm extends JPanel {
 	private void addKelas() {
 		String kode = this.kodeTextField.getText().trim();
 		String nama = this.namaTextField.getText().trim();
+		int a = this.jurusanComboBox.getSelectedIndex();
 
 		if (kode.isEmpty() || kode.isBlank() || nama.isEmpty() || nama.isBlank()) {
 			JOptionPane.showMessageDialog(this, "Input tidak boleh kosong", "Gagal Menambah Kelas", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
 
-		if (KelasQueryModel.insertKelas(new pbo.module4.record.Kelas(kode, nama))) {
+		if (KelasQueryRecord.insert(kode, nama, this.jurusanComboBox.getItemAt(a))) {
 			this.clearInputs();
 			this.tableModel.refresh();
 			JOptionPane.showMessageDialog(this, "Berhasil menambahkan kelas");
@@ -75,13 +89,11 @@ public class KelasForm extends JPanel {
 	private void editKelas() {
 		String kode = this.kodeTextField.getText().trim();
 		String nama = this.namaTextField.getText().trim();
+		Jurusan jurusan = this.jurusanComboBox.getItemAt(this.jurusanComboBox.getSelectedIndex());
 
 		int selectedRow = this.table.getSelectedRow();
 
-		if (KelasQueryModel.updateKelas(
-			(String) this.table.getValueAt(selectedRow, 0),
-			new pbo.module4.record.Kelas(kode, nama)
-		)) {
+		if (KelasQueryRecord.update(this.tableModel.getData().get(selectedRow), kode, nama, jurusan)) {
 			this.clearInputs();
 			this.tableModel.refresh();
 			JOptionPane.showMessageDialog(this, "Berhasil mengedit kelas");
@@ -93,7 +105,7 @@ public class KelasForm extends JPanel {
 	private void deleteKelas() {
 		int selectedRowIndex = this.table.getSelectedRow();
 
-		if (KelasQueryModel.deleteKelas(this.tableModel.getData().get(selectedRowIndex))) {
+		if (KelasQueryRecord.delete(this.tableModel.getData().get(selectedRowIndex))) {
 			this.clearInputs();
 			this.tableModel.refresh();
 			JOptionPane.showMessageDialog(this, "Berhasil menghapus kelas");

@@ -16,6 +16,7 @@ public class SiswaForm extends JPanel {
 	private JTextField noTlpTextField;
 	private JTextField namaTextField;
 	private JTable table;
+	private JComboBox kelasComboBox;
 	private SiswaTableModel tableModel;
 
 	public SiswaForm() {

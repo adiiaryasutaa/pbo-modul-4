@@ -22,6 +22,7 @@ public class ScreenRepository extends LinkedHashMap<String, JComponent> {
 	public void hideAll() {
 		for (var screen: this.values()) {
 			screen.setVisible(false);
+			screen.requestFocus();
 		}
 	}
 

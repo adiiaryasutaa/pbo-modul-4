@@ -1,8 +1,9 @@
 package pbo.module4.forms;
 
-import pbo.module4.database.query.model.JurusanQueryModel;
+import pbo.module4.database.query.record.JurusanQueryRecord;
 import pbo.module4.forms.listener.textfield.TextFieldDocumentListener;
 import pbo.module4.forms.table.model.JurusanTableModel;
+import pbo.module4.record.Jurusan;
 
 import javax.swing.*;
 
@@ -67,7 +68,7 @@ public class JurusanForm extends JPanel {
 			return;
 		}
 
-		if (JurusanQueryModel.insertJurusan(new pbo.module4.record.Jurusan(kodeJurusan, namaJurusan))) {
+		if (JurusanQueryRecord.insert(kodeJurusan, namaJurusan)) {
 			this.clearInputs();
 			this.tableModel.refresh();
 			JOptionPane.showMessageDialog(this, "Berhasil menambahkan jurusan");
@@ -81,11 +82,9 @@ public class JurusanForm extends JPanel {
 		String namaJurusan = this.namaJurusanTextField.getText().trim();
 
 		int selectedRow = this.table.getSelectedRow();
+		Jurusan jurusan = this.tableModel.getData().get(selectedRow);
 
-		if (JurusanQueryModel.updateJurusan(
-			(String) this.table.getValueAt(selectedRow, 0),
-			new pbo.module4.record.Jurusan(kodeJurusan, namaJurusan)
-		)) {
+		if (JurusanQueryRecord.update(jurusan, kodeJurusan, namaJurusan)) {
 			this.clearInputs();
 			this.tableModel.refresh();
 			JOptionPane.showMessageDialog(this, "Berhasil mengedit jurusan");
@@ -96,8 +95,9 @@ public class JurusanForm extends JPanel {
 
 	protected void deleteJurusan() {
 		int selectedRowIndex = this.table.getSelectedRow();
+		Jurusan jurusan = this.tableModel.getData().get(selectedRowIndex);
 
-		if (JurusanQueryModel.deleteJurusan(this.tableModel.getData().get(selectedRowIndex))) {
+		if (JurusanQueryRecord.delete(jurusan)) {
 			this.clearInputs();
 			this.tableModel.refresh();
 			JOptionPane.showMessageDialog(this, "Berhasil menghapus jurusan");

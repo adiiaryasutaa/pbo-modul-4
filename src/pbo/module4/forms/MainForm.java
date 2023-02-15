@@ -19,7 +19,7 @@ public class MainForm extends JFrame {
 		MainForm.screenRepository.put("jurusan", new JurusanForm());
 		MainForm.screenRepository.put("kelas", new KelasForm());
 		MainForm.screenRepository.put("mapel", new MapelForm());
-		MainForm.screenRepository.put("siswa", new SiswaForm());
+//		MainForm.screenRepository.put("siswa", new SiswaForm());
 	}
 
 	public MainForm() {

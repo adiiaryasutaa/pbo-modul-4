@@ -1,5 +1,6 @@
 package pbo.module4;
 
+import pbo.module4.auth.AuthManager;
 import pbo.module4.database.DatabaseConnection;
 import pbo.module4.database.DatabaseQuery;
 import pbo.module4.forms.MainForm;
@@ -14,6 +15,7 @@ import java.util.Objects;
 public class Application {
 	private static DatabaseConnection databaseConnection;
 	private static DatabaseQuery databaseQuery;
+	private static AuthManager authManager = new AuthManager();
 
 	public static void main(String[] args) {
 		Application.makeDatabaseConnection();
@@ -21,14 +23,14 @@ public class Application {
 	}
 
 	private static void makeDatabaseConnection() {
-		Application.databaseConnection = new DatabaseConnection("localhost:3310", "db_pbo", "root", "fr33pass");
+//		Application.databaseConnection = new DatabaseConnection("localhost:3310", "db_pbo", "root", "fr33pass");
+		Application.databaseConnection = new DatabaseConnection("localhost:3310", "nilai_sekolah", "root", "fr33pass");
 		Application.databaseConnection.connect();
 		Application.databaseQuery = new DatabaseQuery(Application.databaseConnection);
 	}
 
 	private static void start() {
 		(new MainForm()).run();
-//		(new MainFrame()).setVisible(true);
 	}
 
 	public static File getResource(String path) throws URISyntaxException, IOException {
@@ -46,5 +48,9 @@ public class Application {
 
 	public static DatabaseQuery getDatabaseQuery() {
 		return Application.databaseQuery;
+	}
+
+	public static AuthManager getAuthManager() {
+		return Application.authManager;
 	}
 }

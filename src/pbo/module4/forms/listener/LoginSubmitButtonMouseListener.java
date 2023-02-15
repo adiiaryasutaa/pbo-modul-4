@@ -1,5 +1,7 @@
 package pbo.module4.forms.listener;
 
+import pbo.module4.Application;
+import pbo.module4.auth.AuthManager;
 import pbo.module4.forms.MainForm;
 
 import javax.swing.*;
@@ -11,15 +13,28 @@ public class LoginSubmitButtonMouseListener extends MouseAdapter {
 	private Component context;
 	private JButton button;
 
-	public LoginSubmitButtonMouseListener(Component context, JButton button) {
+	private JTextField usernameTextField;
+
+	private JPasswordField passwordField;
+
+	public LoginSubmitButtonMouseListener(Component context, JButton button, JTextField usernameTextField, JPasswordField passwordField) {
 		this.context = context;
 		this.button = button;
+		this.usernameTextField = usernameTextField;
+		this.passwordField = passwordField;
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		super.mouseClicked(e);
-		MainForm.authenticatedScene();
+
+		AuthManager auth = Application.getAuthManager();
+
+		if (auth.attempt(this.usernameTextField.getText().trim(), String.valueOf(this.passwordField.getPassword()).trim())) {
+			MainForm.authenticatedScene();
+		} else {
+			JOptionPane.showMessageDialog(this.context, "Login Gagal", "Gagal", JOptionPane.ERROR_MESSAGE);
+		}
 	}
 
 	@Override
@@ -37,7 +52,7 @@ public class LoginSubmitButtonMouseListener extends MouseAdapter {
 	@Override
 	public void mouseEntered(MouseEvent e) {
 		super.mouseEntered(e);
-		context.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		this.context.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		this.button.setBackground(new Color(29, 78, 216));
 	}
 

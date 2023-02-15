@@ -1,0 +1,46 @@
+JFDML JFormDesigner: "8.0.1.0.199" Java: "17.0.5" encoding: "UTF-8"
+
+new FormModel {
+	contentType: "form/swing"
+	root: new FormRoot {
+		add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class com.intellij.uiDesigner.core.GridLayoutManager ) {
+			"$columnCount": 1
+			"$rowCount": 1
+			"hGap": 5
+			"margin": new java.awt.Insets( 24, 24, 24, 24 )
+		} ) {
+			name: "this"
+			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
+				"$horizontalGroup": "par l {seq l {space :::p, par l {comp scrollPane1:::p:811:p, comp label1:::p::p, comp separator1::l:p::p}, space :::x}}"
+				"$verticalGroup": "par l {seq l {space :::p, comp label1:::p::p, space :::p, comp separator1:::p::p, space :p:24:p, comp scrollPane1:::p::p, space :::x}}"
+			} ) {
+				name: "mainPanel"
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "label1"
+					"text": "Data Jurusan"
+					"font": new java.awt.Font( "Inter", 0, 24 )
+				} )
+				add( new FormComponent( "javax.swing.JSeparator" ) {
+					name: "separator1"
+					"preferredSize": new java.awt.Dimension( 200, 3 )
+				} )
+				add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
+					name: "scrollPane1"
+					add( new FormComponent( "javax.swing.JTable" ) {
+						name: "table"
+						"font": new java.awt.Font( "Inter", 0, 16 )
+						"intercellSpacing": new java.awt.Dimension( 0, 0 )
+						"rowHeight": 36
+						"rowMargin": 12
+						"selectionMode": 0
+					} )
+				} )
+			}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
+				"fill": 3
+			} )
+		}, new FormLayoutConstraints( null ) {
+			"location": new java.awt.Point( 0, 0 )
+			"size": new java.awt.Dimension( 895, 615 )
+		} )
+	}
+}

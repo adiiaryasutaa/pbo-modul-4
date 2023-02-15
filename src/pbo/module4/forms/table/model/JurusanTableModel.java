@@ -1,6 +1,6 @@
 package pbo.module4.forms.table.model;
 
-import pbo.module4.database.query.model.JurusanQueryModel;
+import pbo.module4.database.query.record.JurusanQueryRecord;
 import pbo.module4.record.Jurusan;
 
 import javax.swing.table.AbstractTableModel;
@@ -24,7 +24,7 @@ public class JurusanTableModel extends AbstractTableModel {
 	}
 
 	private void fetchData() {
-		this.data = JurusanQueryModel.getAllJurusan();
+		this.data = JurusanQueryRecord.all();
 
 		this.dataVector.removeAllElements();
 

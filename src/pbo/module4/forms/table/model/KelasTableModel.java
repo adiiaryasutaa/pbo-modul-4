@@ -1,6 +1,6 @@
 package pbo.module4.forms.table.model;
 
-import pbo.module4.database.query.model.KelasQueryModel;
+import pbo.module4.database.query.record.KelasQueryRecord;
 import pbo.module4.record.Kelas;
 
 import javax.swing.table.AbstractTableModel;
@@ -14,7 +14,7 @@ public class KelasTableModel extends AbstractTableModel {
 	private Vector<Vector<Object>> dataVector;
 
 	public KelasTableModel() {
-		this.columnNameVector = new Vector<>(List.of("Kode Kelas", "Nama Kelas"));
+		this.columnNameVector = new Vector<>(List.of("Kode Kelas", "Nama Kelas", "Jurusan"));
 		this.dataVector = new Vector<>();
 		this.refresh();
 	}
@@ -24,13 +24,13 @@ public class KelasTableModel extends AbstractTableModel {
 	}
 
 	private void fetchData() {
-		this.data = KelasQueryModel.getAllKelas();
+		this.data = KelasQueryRecord.all();
 
 		this.dataVector.removeAllElements();
 
 		this.data.forEach(kelas ->
 			KelasTableModel.this.dataVector.add(
-				new Vector<>(List.of(kelas.kode(), kelas.nama())))
+				new Vector<>(List.of(kelas.kode(), kelas.nama(), kelas.jurusan().nama())))
 		);
 
 		this.fireTableDataChanged();

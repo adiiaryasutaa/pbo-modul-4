@@ -1,6 +1,6 @@
 package pbo.module4.forms.table.model;
 
-import pbo.module4.database.query.model.MapelQueryModel;
+import pbo.module4.database.query.record.MapelQueryRecord;
 import pbo.module4.record.Mapel;
 
 import javax.swing.table.AbstractTableModel;
@@ -14,7 +14,7 @@ public class MapelTableModel extends AbstractTableModel {
 	private Vector<Vector<Object>> dataVector;
 
 	public MapelTableModel() {
-		this.columnNameVector = new Vector<>(List.of("Id Mapel", "Nama Mapel"));
+		this.columnNameVector = new Vector<>(List.of("Kode", "Nama"));
 		this.dataVector = new Vector<>();
 		this.refresh();
 	}
@@ -24,13 +24,13 @@ public class MapelTableModel extends AbstractTableModel {
 	}
 
 	private void fetchData() {
-		this.data = MapelQueryModel.getAllMapel();
+		this.data = MapelQueryRecord.all();
 
 		this.dataVector.removeAllElements();
 
 		this.data.forEach(mapel ->
 			MapelTableModel.this.dataVector.add(
-				new Vector<>(List.of(mapel.id(), mapel.nama())))
+				new Vector<>(List.of(mapel.kode(), mapel.nama())))
 		);
 
 		this.fireTableDataChanged();
