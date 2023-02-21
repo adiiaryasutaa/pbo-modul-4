@@ -1,13 +1,15 @@
 package ceceply.pbo.mod4.gui.listener.menu;
 
+import ceceply.pbo.mod4.gui.MainFrame;
+
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class MenuMouseListener extends MouseAdapter {
-	private Component context;
+	protected MainFrame context;
 
-	public MenuMouseListener(Component context) {
+	public MenuMouseListener(MainFrame context) {
 		this.context = context;
 	}
 

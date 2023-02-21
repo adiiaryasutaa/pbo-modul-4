@@ -1,22 +1,20 @@
 package ceceply.pbo.mod4.gui.screen;
 
 import ceceply.pbo.mod4.database.query.record.MapelQueryRecord;
+import ceceply.pbo.mod4.gui.MainFrame;
 import ceceply.pbo.mod4.gui.table.model.MapelTableModel;
 
 import javax.swing.*;
 
 public class MapelScreen extends JPanel {
-	private JPanel panel;
-	private JTextField kodeTextField;
-	private JTextField namaTextField;
-	private JButton tambahButton;
-	private JButton editButton;
-	private JButton hapusButton;
-	private JButton batalButton;
-	private JTable table;
-	private MapelTableModel tableModel;
+	private MainFrame context;
 
-	public MapelScreen() {
+	public MapelScreen(MainFrame context) {
+		this.context = context;
+		this.init();
+	}
+
+	private void init() {
 		this.add(this.panel);
 		this.tableModel = new MapelTableModel();
 		this.table.setModel(this.tableModel);
@@ -103,4 +101,14 @@ public class MapelScreen extends JPanel {
 		this.kodeTextField.setText("");
 		this.namaTextField.setText("");
 	}
+
+	private JPanel panel;
+	private JTextField kodeTextField;
+	private JTextField namaTextField;
+	private JButton tambahButton;
+	private JButton editButton;
+	private JButton hapusButton;
+	private JButton batalButton;
+	private JTable table;
+	private MapelTableModel tableModel;
 }

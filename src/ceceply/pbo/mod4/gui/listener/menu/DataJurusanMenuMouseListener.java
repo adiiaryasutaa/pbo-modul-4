@@ -2,16 +2,15 @@ package ceceply.pbo.mod4.gui.listener.menu;
 
 import ceceply.pbo.mod4.gui.MainFrame;
 
-import java.awt.*;
 import java.awt.event.MouseEvent;
 
 public class DataJurusanMenuMouseListener extends MenuMouseListener {
-	public DataJurusanMenuMouseListener(Component context) {
+	public DataJurusanMenuMouseListener(MainFrame context) {
 		super(context);
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		MainFrame.getScreenRepository().show("jurusan");
+		this.context.getScreenRepository().show("jurusan");
 	}
 }

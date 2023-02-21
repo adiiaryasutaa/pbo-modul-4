@@ -31,7 +31,6 @@ public class HomeScreenComponentListener implements ComponentListener {
 
 		AuthModel user = auth.getUser();
 		if (user != null) {
-//			if (user.role())
 			this.welcomeLabel.setText(String.format(this.welcomeLabel.getText(), user.username()));
 		}
 	}

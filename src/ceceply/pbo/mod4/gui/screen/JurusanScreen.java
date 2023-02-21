@@ -1,6 +1,7 @@
 package ceceply.pbo.mod4.gui.screen;
 
 import ceceply.pbo.mod4.database.query.record.JurusanQueryRecord;
+import ceceply.pbo.mod4.gui.MainFrame;
 import ceceply.pbo.mod4.gui.listener.textfield.TextFieldDocumentListener;
 import ceceply.pbo.mod4.gui.table.model.JurusanTableModel;
 import ceceply.pbo.mod4.record.Jurusan;
@@ -8,23 +9,19 @@ import ceceply.pbo.mod4.record.Jurusan;
 import javax.swing.*;
 
 public class JurusanScreen extends JPanel {
-	private JPanel panel;
-	private JTextField kodeJurusanTextField;
-	private JTextField namaJurusanTextField;
-	private JButton tambahButton;
-	private JButton editButton;
-	private JButton hapusButton;
-	private JButton batalButton;
-	private JTable table;
-	private JurusanTableModel tableModel;
+	private MainFrame context;
 
-	public JurusanScreen() {
+	public JurusanScreen(MainFrame context) {
+		this.context = context;
+		this.init();
+	}
+
+	private void init() {
 		this.add(this.panel).setSize(800, 400);
 		this.tableModel = new JurusanTableModel();
 		this.table.setModel(tableModel);
 
-		this.namaJurusanTextField
-			.getDocument().addDocumentListener(new TextFieldDocumentListener(this.editButton));
+		this.namaJurusanTextField.getDocument().addDocumentListener(new TextFieldDocumentListener(this.editButton));
 
 		this.editButton.setEnabled(false);
 		this.hapusButton.setEnabled(false);
@@ -110,4 +107,14 @@ public class JurusanScreen extends JPanel {
 		this.kodeJurusanTextField.setText("");
 		this.namaJurusanTextField.setText("");
 	}
+
+	private JPanel panel;
+	private JTextField kodeJurusanTextField;
+	private JTextField namaJurusanTextField;
+	private JButton tambahButton;
+	private JButton editButton;
+	private JButton hapusButton;
+	private JButton batalButton;
+	private JTable table;
+	private JurusanTableModel tableModel;
 }

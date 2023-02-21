@@ -10,14 +10,14 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class LoginSubmitButtonMouseListener extends MouseAdapter {
-	private Component context;
+	private MainFrame context;
 	private JButton button;
 
 	private JTextField usernameTextField;
 
 	private JPasswordField passwordField;
 
-	public LoginSubmitButtonMouseListener(Component context, JButton button, JTextField usernameTextField, JPasswordField passwordField) {
+	public LoginSubmitButtonMouseListener(MainFrame context, JButton button, JTextField usernameTextField, JPasswordField passwordField) {
 		this.context = context;
 		this.button = button;
 		this.usernameTextField = usernameTextField;
@@ -31,7 +31,7 @@ public class LoginSubmitButtonMouseListener extends MouseAdapter {
 		AuthManager auth = Application.getAuthManager();
 
 		if (auth.attempt(this.usernameTextField.getText().trim(), String.valueOf(this.passwordField.getPassword()).trim())) {
-			MainFrame.authenticatedScene();
+			this.context.authenticatedScene();
 		} else {
 			JOptionPane.showMessageDialog(this.context, "Login Gagal", "Gagal", JOptionPane.ERROR_MESSAGE);
 		}

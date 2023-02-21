@@ -1,6 +1,7 @@
 package ceceply.pbo.mod4.gui.screen;
 
 import ceceply.pbo.mod4.Application;
+import ceceply.pbo.mod4.gui.MainFrame;
 import ceceply.pbo.mod4.gui.listener.LoginSubmitButtonMouseListener;
 import ceceply.pbo.mod4.gui.style.TextFieldFocusListener;
 
@@ -11,25 +12,23 @@ import java.net.URISyntaxException;
 import java.net.URL;
 
 public class LoginScreen extends JPanel {
-	private JPanel panel;
-	private JTextField usernameTextField;
-	private JPasswordField passwordPasswordField;
-	private JLabel loginImageIcon;
-	private JButton submitButton;
+	private MainFrame context;
 
-	public LoginScreen() {
+	public LoginScreen(MainFrame context) {
+		this.context = context;
 		this.init();
-		this.prepareLoginImageIcon();
 	}
 
 	private void init() {
 		this.add(this.panel);
 
+		this.prepareLoginImageIcon();
+
 		this.usernameTextField.addFocusListener(new TextFieldFocusListener(this.usernameTextField));
 		this.passwordPasswordField.addFocusListener(new TextFieldFocusListener(this.passwordPasswordField));
 
 		this.submitButton.setBorder(this.usernameTextField.getBorder());
-		this.submitButton.addMouseListener(new LoginSubmitButtonMouseListener(this, this.submitButton, this.usernameTextField, this.passwordPasswordField));
+		this.submitButton.addMouseListener(new LoginSubmitButtonMouseListener(this.context, this.submitButton, this.usernameTextField, this.passwordPasswordField));
 	}
 
 	private void prepareLoginImageIcon() {
@@ -43,4 +42,10 @@ public class LoginScreen extends JPanel {
 			throw new RuntimeException(e);
 		}
 	}
+
+	private JPanel panel;
+	private JTextField usernameTextField;
+	private JPasswordField passwordPasswordField;
+	private JLabel loginImageIcon;
+	private JButton submitButton;
 }

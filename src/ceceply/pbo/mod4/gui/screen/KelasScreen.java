@@ -1,5 +1,6 @@
 package ceceply.pbo.mod4.gui.screen;
 
+import ceceply.pbo.mod4.gui.MainFrame;
 import ceceply.pbo.mod4.gui.table.model.KelasTableModel;
 import ceceply.pbo.mod4.database.query.record.JurusanQueryRecord;
 import ceceply.pbo.mod4.database.query.record.KelasQueryRecord;
@@ -8,23 +9,16 @@ import ceceply.pbo.mod4.record.Jurusan;
 import javax.swing.*;
 
 public class KelasScreen extends JPanel {
-	private JPanel panel;
-	private JTextField kodeTextField;
-	private JTextField namaTextField;
-	private JButton tambahButton;
-	private JButton editButton;
-	private JButton hapusButton;
-	private JButton batalButton;
-	private JTable table;
-	private JComboBox<Jurusan> jurusanComboBox;
-	private KelasTableModel tableModel;
+	private MainFrame context;
 
-	public KelasScreen() {
-		this.add(this.panel);
+	public KelasScreen(MainFrame context) {
+		this.context = context;
 		this.init();
 	}
 
 	private void init() {
+		this.add(this.panel);
+
 		this.tableModel = new KelasTableModel();
 		this.table.setModel(this.tableModel);
 
@@ -117,4 +111,15 @@ public class KelasScreen extends JPanel {
 		this.kodeTextField.setText("");
 		this.namaTextField.setText("");
 	}
+
+	private JPanel panel;
+	private JTextField kodeTextField;
+	private JTextField namaTextField;
+	private JButton tambahButton;
+	private JButton editButton;
+	private JButton hapusButton;
+	private JButton batalButton;
+	private JTable table;
+	private JComboBox<Jurusan> jurusanComboBox;
+	private KelasTableModel tableModel;
 }

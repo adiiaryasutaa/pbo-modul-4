@@ -1,9 +1,9 @@
 package ceceply.pbo.mod4.gui.listener.menu;
 
-import java.awt.*;
+import ceceply.pbo.mod4.gui.MainFrame;
 
 public class DataDiriMenuMouseListener extends MenuMouseListener {
-	public DataDiriMenuMouseListener(Component context) {
+	public DataDiriMenuMouseListener(MainFrame context) {
 		super(context);
 	}
 }

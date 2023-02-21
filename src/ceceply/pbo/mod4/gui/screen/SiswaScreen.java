@@ -2,26 +2,17 @@ package ceceply.pbo.mod4.gui.screen;
 
 import ceceply.pbo.mod4.database.query.record.KelasQueryRecord;
 import ceceply.pbo.mod4.database.query.record.SiswaQueryRecord;
+import ceceply.pbo.mod4.gui.MainFrame;
 import ceceply.pbo.mod4.record.Kelas;
 import ceceply.pbo.mod4.gui.table.model.SiswaTableModel;
 
 import javax.swing.*;
 
 public class SiswaScreen extends JPanel {
-	private JPanel panel;
-	private JTextField nisTextField;
-	private JTextField alamatTextField;
-	private JButton tambahButton;
-	private JButton editButton;
-	private JButton hapusButton;
-	private JButton batalButton;
-	private JTextField noTlpTextField;
-	private JTextField namaTextField;
-	private JTable table;
-	private JComboBox<Kelas> kelasComboBox;
-	private SiswaTableModel tableModel;
+	private MainFrame context;
 
-	public SiswaScreen() {
+	public SiswaScreen(MainFrame context) {
+		this.context = context;
 		this.add(this.panel);
 		this.init();
 	}
@@ -132,4 +123,17 @@ public class SiswaScreen extends JPanel {
 		this.alamatTextField.setText("");
 		this.kelasComboBox.setSelectedIndex(0);
 	}
+
+	private JPanel panel;
+	private JTextField nisTextField;
+	private JTextField alamatTextField;
+	private JButton tambahButton;
+	private JButton editButton;
+	private JButton hapusButton;
+	private JButton batalButton;
+	private JTextField noTlpTextField;
+	private JTextField namaTextField;
+	private JTable table;
+	private JComboBox<Kelas> kelasComboBox;
+	private SiswaTableModel tableModel;
 }

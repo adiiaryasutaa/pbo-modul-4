@@ -1,6 +1,7 @@
 package ceceply.pbo.mod4.record;
 
 import ceceply.pbo.mod4.auth.AuthModel;
+import ceceply.pbo.mod4.auth.UserLevel;
 
 import java.sql.Date;
 
@@ -16,10 +17,11 @@ public record User(int id, String username, String password, int level, Date tan
 	}
 
 	@Override
-	public String role() {
+	public UserLevel userLevel() {
 		return switch (level) {
-			case 1 -> UserLevel.ADMIN.name();
-			case 2, default -> UserLevel.PETUGAS.name();
+			case 1 -> UserLevel.ADMIN;
+			case 2 -> UserLevel.PETUGAS;
+			default -> throw new IllegalStateException("Unexpected value: " + level);
 		};
 	}
 

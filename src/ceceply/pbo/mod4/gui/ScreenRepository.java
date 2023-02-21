@@ -10,10 +10,6 @@ public class ScreenRepository extends LinkedHashMap<String, JComponent> {
 		this.context = context;
 	}
 
-	public ScreenRepository() {
-
-	}
-
 	public void show(String name) {
 		this.hideAll();
 		this.get(name).setVisible(true);
@@ -26,8 +22,20 @@ public class ScreenRepository extends LinkedHashMap<String, JComponent> {
 		}
 	}
 
+	public void addAllScreenToContext() {
+		for (var screen : this.values()) {
+			this.context.add(screen).setVisible(false);
+		}
+	}
+
 	@Override
 	public JComponent put(String key, JComponent value) {
 		return super.put(key, value);
+	}
+
+	@Override
+	public void clear() {
+		this.hideAll();
+		super.clear();
 	}
 }

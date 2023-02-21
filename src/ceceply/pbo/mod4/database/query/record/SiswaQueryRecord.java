@@ -12,6 +12,67 @@ import java.sql.SQLException;
 import java.util.LinkedList;
 
 public class SiswaQueryRecord extends QueryRecord {
+	public static Siswa get(String nis) {
+		try {
+			String query = String.format(
+				"""
+					SELECT * FROM `%s`
+					INNER JOIN `%s` ON `%s`.`%s` = `%s`.`%s`
+					INNER JOIN `%s` ON `%s`.`%s` = `%s`.`%s`
+					WHERE `%s`.`%s` = ?
+				""",
+				Siswa.TABLE_NAME,
+				Kelas.TABLE_NAME,
+				Siswa.TABLE_NAME,
+				Siswa.ID_KELAS_COLUMN,
+				Kelas.TABLE_NAME,
+				Kelas.ID_COLUMN,
+				Jurusan.TABLE_NAME,
+				Jurusan.TABLE_NAME,
+				Jurusan.ID_COLUMN,
+				Kelas.TABLE_NAME,
+				Kelas.ID_JURUSAN_COLUMN,
+				Siswa.TABLE_NAME,
+				Siswa.NIS_COLUMN
+			);
+			PreparedStatement preparedStatement = connection.prepareStatement(query);
+
+			preparedStatement.setString(1, nis);
+
+			ResultSet resultSet = preparedStatement.executeQuery();
+
+			if (!resultSet.next()) {
+				return null;
+			}
+
+			return new Siswa(
+				resultSet.getInt(Siswa.TABLE_NAME + "." + Siswa.ID_COLUMN),
+				resultSet.getString(Siswa.TABLE_NAME + "." + Siswa.NIS_COLUMN),
+				resultSet.getString(Siswa.TABLE_NAME + "." + Siswa.NAMA_COLUMN),
+				resultSet.getString(Siswa.TABLE_NAME + "." + Siswa.NO_TELEPON_COLUMN),
+				resultSet.getString(Siswa.TABLE_NAME + "." + Siswa.ALAMAT_COLUMN),
+				new Kelas(
+					resultSet.getInt(Kelas.TABLE_NAME + "." + Kelas.ID_COLUMN),
+					resultSet.getString(Kelas.TABLE_NAME + "." + Kelas.KODE_COLUMN),
+					resultSet.getString(Kelas.TABLE_NAME + "." + Kelas.NAMA_COLUMN),
+					new Jurusan(
+						resultSet.getInt(Jurusan.TABLE_NAME + "." + Jurusan.ID_COLUMN),
+						resultSet.getString(Jurusan.TABLE_NAME + "." + Jurusan.KODE_COLUMN),
+						resultSet.getString(Jurusan.TABLE_NAME + "." + Jurusan.NAMA_COLUMN),
+						resultSet.getString(Jurusan.TABLE_NAME + "." + Jurusan.TANGGAL_DIPERBARUI_COLUMN),
+						resultSet.getString(Jurusan.TABLE_NAME + "." + Jurusan.TANGGAL_DIBUAT_COLUMN)
+					),
+					resultSet.getDate(Kelas.TABLE_NAME + "." + Kelas.TANGGAL_DIBUAT_COLUMN),
+					resultSet.getDate(Kelas.TABLE_NAME + "." + Kelas.TANGGAL_DIPERBARUI_COLUMN)
+				),
+				resultSet.getDate(Siswa.TABLE_NAME + "." + Siswa.TANGGAL_DIPERBARUI_COLUMN),
+				resultSet.getDate(Siswa.TABLE_NAME + "." + Siswa.TANGGAL_DIBUAT_COLUMN)
+			);
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
 	public static LinkedList<Siswa> all() {
 		try {
 			String query = String.format(

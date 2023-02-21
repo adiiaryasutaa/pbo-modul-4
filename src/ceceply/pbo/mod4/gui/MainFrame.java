@@ -1,30 +1,21 @@
 package ceceply.pbo.mod4.gui;
 
+import ceceply.pbo.mod4.Application;
+import ceceply.pbo.mod4.auth.UserLevel;
 import ceceply.pbo.mod4.gui.component.MenuBar;
-import ceceply.pbo.mod4.gui.screen.SplashScreen;
 import ceceply.pbo.mod4.gui.screen.*;
+import ceceply.pbo.mod4.gui.screen.SplashScreen;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class MainFrame extends JFrame {
-	private static ScreenRepository screenRepository;
-	private static MenuBar menuBar;
-
-	static {
-		MainFrame.screenRepository = new ScreenRepository();
-		MainFrame.menuBar = new MenuBar();
-
-		MainFrame.screenRepository.put("splash", new SplashScreen());
-		MainFrame.screenRepository.put("login", new LoginScreen());
-		MainFrame.screenRepository.put("home", new HomeScreen());
-		MainFrame.screenRepository.put("jurusan", new JurusanScreen());
-		MainFrame.screenRepository.put("kelas", new KelasScreen());
-		MainFrame.screenRepository.put("mapel", new MapelScreen());
-		MainFrame.screenRepository.put("siswa", new SiswaScreen());
-	}
+	private ScreenRepository screenRepository;
+	private MenuBar menuBar;
 
 	public MainFrame() {
+		this.screenRepository = new ScreenRepository(this);
+		this.menuBar = new MenuBar(this);
 		this.init();
 	}
 
@@ -38,34 +29,56 @@ public class MainFrame extends JFrame {
 		this.setBounds(x, y, 1400, 780);
 		this.setLocationRelativeTo(null);
 
-		this.setJMenuBar(MainFrame.menuBar);
+		this.setJMenuBar(this.menuBar);
+	}
 
-		for (JComponent screen : MainFrame.screenRepository.values()) {
-			this.add(screen).setVisible(false);
+	public void authenticationScene() {
+		this.menuBar.update();
+
+		this.screenRepository.clear();
+		this.screenRepository.put("login", new LoginScreen(this));
+		this.screenRepository.addAllScreenToContext();
+
+		this.screenRepository.show("login");
+	}
+
+	public void authenticatedScene() {
+		this.menuBar.update();
+
+		UserLevel userLevel = Application.getAuthManager().getUser().userLevel();
+
+		this.screenRepository.clear();
+
+		this.screenRepository.put("home", new HomeScreen(this));
+
+		if (userLevel == UserLevel.ADMIN) {
+			this.screenRepository.put("jurusan", new JurusanScreen(this));
+			this.screenRepository.put("kelas", new KelasScreen(this));
+			this.screenRepository.put("mapel", new MapelScreen(this));
+			this.screenRepository.put("siswa", new SiswaScreen(this));
+		} else if (userLevel == UserLevel.SISWA) {
+
 		}
-	}
 
-	public static void beforeAuthenticatedScene() {
-		MainFrame.menuBar.setVisible(false);
-		MainFrame.screenRepository.show("login");
-	}
+		this.screenRepository.addAllScreenToContext();
 
-	public static void authenticatedScene() {
-		MainFrame.menuBar.setVisible(true);
-		MainFrame.screenRepository.show("home");
+		this.screenRepository.show("home");
 	}
 
 	public void run() {
-		this.setVisible(true);
+		this.screenRepository.clear();
+		this.screenRepository.put("splash", new SplashScreen());
+		this.screenRepository.addAllScreenToContext();
 
-		MainFrame.screenRepository.show("splash");
+		this.setVisible(true);
+		this.screenRepository.show("splash");
 
 		try {
 			for (int i = 0; i <= 100; i++) {
 				Thread.sleep(10);
 
 				if (i == 100) {
-					MainFrame.beforeAuthenticatedScene();
+					this.authenticationScene();
 				}
 			}
 		} catch (InterruptedException e) {
@@ -73,8 +86,8 @@ public class MainFrame extends JFrame {
 		}
 	}
 
-	public static ScreenRepository getScreenRepository() {
-		return MainFrame.screenRepository;
+	public ScreenRepository getScreenRepository() {
+		return this.screenRepository;
 	}
 
 	private JPanel panel;
